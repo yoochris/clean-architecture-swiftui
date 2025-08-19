@@ -1,14 +1,14 @@
 ### Articles related to this project
 
-* [Clean Architecture for SwiftUI](https://nalexn.github.io/clean-architecture-swiftui/?utm_source=nalexn_github)
-* [Programmatic navigation in SwiftUI project](https://nalexn.github.io/swiftui-deep-linking/?utm_source=nalexn_github)
-* [Separation of Concerns in Software Design](https://nalexn.github.io/separation-of-concerns/?utm_source=nalexn_github)
+- [Clean Architecture for SwiftUI](https://nalexn.github.io/clean-architecture-swiftui/?utm_source=nalexn_github)
+- [Programmatic navigation in SwiftUI project](https://nalexn.github.io/swiftui-deep-linking/?utm_source=nalexn_github)
+- [Separation of Concerns in Software Design](https://nalexn.github.io/separation-of-concerns/?utm_source=nalexn_github)
 
 ---
 
 # Clean Architecture for SwiftUI + Combine
 
-A demo project showcasing the setup of the SwiftUI app with Clean Architecture.
+A demo project showcasing the setup of the SwiftUI app with Clean Architecture
 
 The app uses the [restcountries.com](https://restcountries.com/) REST API to show the list of countries and details about them.
 
@@ -23,16 +23,17 @@ For the example of handling the **authentication state** in the app, you can ref
 </p>
 
 ## Key features
-* End of 2024 update: the project was fully revamped to use modern iOS stack technologies
-* Decoupled **Presentation**, **Business Logic**, and **Data Access** layers
-* Programmatic navigation. Push notifications with deep link
-* Redux-like centralized `AppState` as the single source of truth
-* Native SwiftUI dependency injection
-* Handling of the system events (such as `didBecomeActive`, `willResignActive`)
-* Full test coverage, including the UI (thanks to the [ViewInspector](https://github.com/nalexn/ViewInspector))
-* Simple yet flexible networking layer built on async - await
-* UI - vanilla **SwiftUI** + **Combine**
-* Data persistence with **SwiftData**
+
+- End of 2024 update: the project was fully revamped to use modern iOS stack technologies
+- Decoupled **Presentation**, **Business Logic**, and **Data Access** layers
+- Programmatic navigation. Push notifications with deep link
+- Redux-like centralized `AppState` as the single source of truth
+- Native SwiftUI dependency injection
+- Handling of the system events (such as `didBecomeActive`, `willResignActive`)
+- Full test coverage, including the UI (thanks to the [ViewInspector](https://github.com/nalexn/ViewInspector))
+- Simple yet flexible networking layer built on async - await
+- UI - vanilla **SwiftUI** + **Combine**
+- Data persistence with **SwiftData**
 
 ## Architecture overview
 
@@ -50,7 +51,7 @@ State and business logic layer (`AppState` + `Interactors`) are natively injecte
 
 ### Business Logic Layer
 
-Business Logic Layer is represented by `Interactors`. 
+Business Logic Layer is represented by `Interactors`.
 
 Interactors receive requests to perform work, such as obtaining data from an external source or making computations, but they never return data back directly.
 
