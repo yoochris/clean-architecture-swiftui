@@ -9,6 +9,23 @@
 import Foundation
 import Combine
 
+/**
+ * WebRepository - 通用网络访问协议与工具集
+ * 
+ * 组成：
+ * - WebRepository 协议：需要一个 URLSession 与 baseURL
+ * - call(endpoint:decoder:httpCodes:)：泛型解码网络响应为目标类型
+ * - APICall 协议：约定 path/method/headers/body 并可生成 URLRequest
+ * - APIError：统一错误枚举及本地化描述
+ * - HTTPCodes：常用 2xx 成功范围
+ * 
+ * 小例子：
+ * struct Repo: WebRepository { let session: URLSession; let baseURL = "https://api.example.com" }
+ * enum API: APICall { case users; var path: String { "/users" }; var method: String { "GET" }; var headers: [String:String]? { ["Accept":"application/json"] }; func body() throws -> Data? { nil } }
+ * let repo = Repo(session: .shared)
+ * let users: [User] = try await repo.call(endpoint: API.users)
+ */
+
 enum ApiModel { }
 
 protocol WebRepository {
@@ -17,6 +34,7 @@ protocol WebRepository {
 }
 
 extension WebRepository {
+    /// 通用请求：构建 URLRequest → URLSession.data(for:) → 校验 HTTP 码 → 解码为 Value
     func call<Value, Decoder>(
         endpoint: APICall,
         decoder: Decoder = JSONDecoder(),
@@ -42,6 +60,7 @@ extension WebRepository {
 
 // MARK: - APICall
 
+/// 描述一个具体的 API 调用（REST 端点）
 protocol APICall {
     var path: String { get }
     var method: String { get }
@@ -49,6 +68,7 @@ protocol APICall {
     func body() throws -> Data?
 }
 
+/// 统一的网络层错误枚举
 enum APIError: Swift.Error, Equatable {
     case invalidURL
     case httpCode(HTTPCode)
@@ -68,6 +88,7 @@ extension APIError: LocalizedError {
 }
 
 extension APICall {
+    /// 由 baseURL + path 组成 URL 并构造 URLRequest
     func urlRequest(baseURL: String) throws -> URLRequest {
         guard let url = URL(string: baseURL + path) else {
             throw APIError.invalidURL
@@ -80,8 +101,9 @@ extension APICall {
     }
 }
 
-typealias HTTPCode = Int
-typealias HTTPCodes = Range<HTTPCode>
+/// HTTP 码辅助类型与常用范围
+ typealias HTTPCode = Int
+ typealias HTTPCodes = Range<HTTPCode>
 
 extension HTTPCodes {
     static let success = 200 ..< 300

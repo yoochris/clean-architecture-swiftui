@@ -10,6 +10,17 @@ import Foundation
 
 #if DEBUG
 
+/**
+ * MockedData - 仅在 DEBUG 构建下可用的 API 模型假数据
+ * 
+ * 作用：
+ * - 让预览（SwiftUI Preview）或单元测试可以不依赖真实网络
+ * - 快速搭建 UI 与交互逻辑
+ * 
+ * 使用示例：
+ * - 预览中直接注入 mockedData 到 ViewModel 或 Interactor
+ * - 单测中构造 Stub 仓库，返回 mockedData
+ */
 @MainActor
 extension ApiModel.Country {
     static let mockedData: [ApiModel.Country] = [
